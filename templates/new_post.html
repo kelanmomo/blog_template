@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super}} | 新建 
+{% endblock %}
+
+{% block lists %}
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Categorys</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'category_list' category.pk %}">{{ category.name }}</a></li>
+    <li class="breadcrumb-item activate">New Post</li>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_superuser %}
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% include 'includes/form.html' %}
+            <button type="submit" class="btn btn-success">发布</button>
+        </form>
+    {% else %}
+        <p>你是从哪找到这里的？快回去！！！！~~~~~</p>
+        <p class="text-center" style="font-family:STLiti;font-size:75px;">假装自己是<br>404</p>
+    {% endif %}
+{% endblock %}

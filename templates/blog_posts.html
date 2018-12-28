@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ block.super}} | {{ blog.title }}
+{% endblock %}
+
+{% block lists %}
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Categorys</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'category_list' blog.tag.pk %}">{{ blog.tag.name }}</a></li>
+    <li class="breadcrumb-item active">{{ blog.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+        <h3 class="top-gap-0">{{ blog.title }}</h3>
+        <ul class="list-inline dot-divider post-meta">
+            <li class="list-inline-item text-small text-muted">{{ blog.post_date|date:"Y-m-d"}}</li>
+            <li class="list-inline-item text-small text-muted">默默</li>
+            <li class="list-inline-item text-small text-muted">阅读：{{ blog.views }}</li>
+        </ul>
+        <div class="top-gap-big post-body">
+            <p>{{ blog.get_message_as_markdown }}</p>
+        </div>
+    </article>
+    <hr>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+            <div class="form-group">
+                <label for="comment_message">评论</label>
+                <textarea rows="5" class="form-control" id="comment_message" name="message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">发布评论</button>
+        {% else %}
+            <strong class="comments-stat pull-left mr10">注册后可以发表评论</strong>
+        {% endif %}
+    </form>
+    <br>
+    {% for comment in blog.comments.all %}
+        <div class="card mb-2">
+            <div class="card-body p-3">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="{% static 'img/user_icon.jpg' %}" alt="{{ comment.create_by }}" class="w-50">
+                    </div>
+                    <div class="col-10">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong class="text-muted">{{ comment.create_by }}</strong>
+                            </div>
+                            <div class="col-6 text-right">
+                                <small class="text-muted">{{ comment.create_date | date:"Y-m-d H:i" }}</small>
+                            </div>
+                        </div>
+                        {{ comment.get_message_as_markdown }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

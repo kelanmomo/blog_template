@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block lists %}
+<li class="breadcrumb-item">Welcome to my Blog!!!这是一个脑袋不太灵光的小QA写的一个很随心的Blog，分享一些基础QA知识，欢迎指教~~~~</li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div id="nav" class="col-md-3">
+            <h3>文章分类</h3>
+            <br>
+                {% for category in categorys %}
+                <ul>
+                    <li><a href="{% url 'category_list' category.pk %}">{{ category.name }}({{ category.posts.count }})</a></li>
+                </ul>
+                {% endfor %}
+            <br>
+            <hr>
+            <p class="text-center"><strong>欢迎关注我的公众号</strong></p>
+            <img src="{% static '/img/QR.jpg' %}">
+        </div>
+        <div id="introduce" class="col-md-9">
+            <article class="post">
+                <h3 class="top-gap-0">关于我……</h3>
+                <ul class="list-inline dot-divider post-meta">
+                    <li class="list-inline-item text-small text-muted">默默</li>
+                </ul>
+                <div class="top-gap-big post-body">
+                    <p> &emsp;&emsp;正如标题下方所写，我的职业是软件测试。
+                        <br>
+                        <br>
+                        &emsp;&emsp;从事QA这个行业已经四年多了，从最开始的懵懂无知，到现在恨自己懵懂无知，可以说是经历了很多。
+                        测试的门槛很低，只要有细心和耐心就可以从最底层的黑盒测试开始接触，逐渐成长为一个正式的测试人员了。但如果你想要有所提升，就必须懂一点点技术。<br>
+                        &emsp;&emsp;从网络上可以寻找到的学习资源有很多，但是大部分都是你复制我，我再复制你，错误率高而且很不细致，有无数的坑要爬。每次搜资料，我都很希望可以有一个更详细，可以让我少掉坑的指南。<br>
+                        &emsp;&emsp;这个博客是我的一个学习笔记，尽量都写得很详细，希望在我学习和记忆的同时，也可以帮助你少掉坑。<br>
+                        &emsp;&emsp;我不是什么技术大牛，笔记肯定也会有一些错误之处，欢迎指正。
+                        <br>
+                        <br>
+                        &emsp;&emsp;祝每天愉快~~~~~
+                    </p>
+                </div>
+            </article>
+        </div>
+        <div class="col-md-12">
+            <p class="text-center"><a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:grey"><small>辽ICP备18019353号-1</small></a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
